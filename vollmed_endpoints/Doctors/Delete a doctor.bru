@@ -1,0 +1,15 @@
+meta {
+  name: Delete a doctor
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{BASE_URL}}/doctors/{{id}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  id: 1
+}
