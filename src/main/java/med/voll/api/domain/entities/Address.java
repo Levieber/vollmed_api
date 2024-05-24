@@ -4,8 +4,8 @@ import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.application.dtos.CreateAddressDto;
-import med.voll.api.application.dtos.UpdateAddressDto;
+import med.voll.api.application.dtos.address.CreateAddressDto;
+import med.voll.api.application.dtos.address.UpdateAddressDto;
 
 @Embeddable
 @Getter

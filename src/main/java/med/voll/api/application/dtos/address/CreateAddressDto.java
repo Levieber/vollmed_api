@@ -1,10 +1,10 @@
-package med.voll.api.application.dtos;
+package med.voll.api.application.dtos.address;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record UpdateAddressDto(
+public record CreateAddressDto(
         @NotBlank
         String street,
         @NotBlank

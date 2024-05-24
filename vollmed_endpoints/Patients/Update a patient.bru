@@ -1,11 +1,11 @@
 meta {
-  name: Update a doctor
+  name: Update a patient
   type: http
   seq: 3
 }
 
 patch {
-  url: {{BASE_URL}}/doctors/{{id}}
+  url: {{BASE_URL}}/patients/{{id}}
   body: json
   auth: none
 }

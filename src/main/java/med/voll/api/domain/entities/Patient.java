@@ -5,40 +5,36 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.application.dtos.doctor.CreateDoctorDto;
-import med.voll.api.application.dtos.doctor.UpdateDoctorDto;
-import med.voll.api.domain.enums.DoctorSpeciality;
+import med.voll.api.application.dtos.patient.CreatePatientDto;
+import med.voll.api.application.dtos.patient.UpdatePatientDto;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "patients")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Doctor {
+public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private String phone;
-    private String crm;
-    private boolean active = true;
-    @Enumerated(EnumType.STRING)
-    private DoctorSpeciality speciality;
+    private String cpf;
     @Embedded
     private Address address;
+    private Boolean active = true;
 
-    public Doctor(CreateDoctorDto dto) {
-        name = dto.name();
-        email = dto.email();
-        phone = dto.phone();
-        crm = dto.crm();
-        speciality = dto.speciality();
-        address = new Address(dto.address());
+    public Patient(CreatePatientDto dto) {
+            name = dto.name();
+            email = dto.email();
+            phone = dto.phone();
+            cpf = dto.cpf();
+            address = new Address(dto.address());
     }
 
-    public void update(UpdateDoctorDto dto) {
+    public void update(UpdatePatientDto dto) {
         if (dto.name() != null && !dto.name().isBlank()) {
             name = dto.name();
         }

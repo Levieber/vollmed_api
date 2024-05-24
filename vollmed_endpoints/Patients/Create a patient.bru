@@ -1,11 +1,11 @@
 meta {
-  name: Create a doctor
+  name: Create a patient
   type: http
   seq: 1
 }
 
 post {
-  url: {{BASE_URL}}/doctors
+  url: {{BASE_URL}}/patients
   body: json
   auth: none
 }
@@ -15,8 +15,7 @@ body:json {
     "name": "Levi Eber",
     "email": "levieber@voll.med",
     "phone": "84981888888",
-    "crm": "123456",
-    "speciality": "CARDIOLOGY",
+    "cpf": "123.456.789-10",
     "address": {
       "street": "rua 1",
       "neighborhood": "bairro",

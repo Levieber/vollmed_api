@@ -1,8 +1,9 @@
 package med.voll.api.application.services;
 
-import med.voll.api.application.dtos.CreateDoctorDto;
-import med.voll.api.application.dtos.ReadDoctorDto;
-import med.voll.api.application.dtos.UpdateDoctorDto;
+import med.voll.api.application.dtos.doctor.CreateDoctorDto;
+import med.voll.api.application.dtos.doctor.ListDoctorsDto;
+import med.voll.api.application.dtos.doctor.ShowDoctorDto;
+import med.voll.api.application.dtos.doctor.UpdateDoctorDto;
 import med.voll.api.domain.entities.Doctor;
 import med.voll.api.infra.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,14 @@ public class DoctorService {
         doctorRepository.save(new Doctor(dto));
     }
 
-    public Page<ReadDoctorDto> getAll(Pageable pageable) {
-        return doctorRepository.findAllByActiveTrue(pageable).map(ReadDoctorDto::new);
+    public Page<ListDoctorsDto> getAll(Pageable pageable) {
+        return doctorRepository.findAllByActiveTrue(pageable).map(ListDoctorsDto::new);
     }
 
-    public void update(Long id, UpdateDoctorDto dto) {
+    public ShowDoctorDto update(Long id, UpdateDoctorDto dto) {
         var doctor = doctorRepository.getReferenceById(id);
         doctor.update(dto);
+        return new ShowDoctorDto(doctor);
     }
 
     public void delete(Long id) {
