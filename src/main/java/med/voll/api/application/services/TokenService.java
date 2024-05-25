@@ -3,6 +3,7 @@ package med.voll.api.application.services;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import med.voll.api.domain.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,36 @@ import java.time.ZoneOffset;
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
+    @Value("${api.security.token.issuer}")
+    private String issuer;
+
 
     public String generate(User user) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
+            var algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("API Voll.med")
+                    .withIssuer(issuer)
                     .withSubject(user.getLogin())
                     .withExpiresAt(getExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error when generating token", exception);
+        }
+    }
+
+    public String decode(String token) {
+        try {
+            if (!token.contains("Bearer")) {
+                throw new RuntimeException("Invalid token type");
+            }
+            var algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer(issuer)
+                    .build()
+                    .verify(token.replace("Bearer ", ""))
+                    .getSubject();
+        } catch (JWTVerificationException exception) {
+            throw new RuntimeException("Invalid token");
         }
     }
 
