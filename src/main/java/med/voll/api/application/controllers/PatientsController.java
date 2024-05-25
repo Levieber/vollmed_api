@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("patients")
@@ -22,9 +23,10 @@ public class PatientsController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Void> create(@RequestBody @Valid CreatePatientDto dto) {
-        patientService.create(dto);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ShowPatientDto> create(@RequestBody @Valid CreatePatientDto dto, UriComponentsBuilder uriBuilder) {
+        var showPatientDto = patientService.create(dto);
+        var uri = uriBuilder.path("/patients/{id}").buildAndExpand(showPatientDto.id()).toUri();
+        return ResponseEntity.created(uri).body(showPatientDto);
     }
 
     @GetMapping
@@ -43,5 +45,10 @@ public class PatientsController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         patientService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ShowPatientDto> show(@PathVariable Long id) {
+        return ResponseEntity.ok(patientService.getById(id));
     }
 }

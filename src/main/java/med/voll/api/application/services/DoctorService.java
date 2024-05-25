@@ -16,8 +16,8 @@ public class DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
 
-    public void create(CreateDoctorDto dto) {
-        doctorRepository.save(new Doctor(dto));
+    public ShowDoctorDto create(CreateDoctorDto dto) {
+        return new ShowDoctorDto(doctorRepository.save(new Doctor(dto)));
     }
 
     public Page<ListDoctorsDto> getAll(Pageable pageable) {
@@ -33,5 +33,9 @@ public class DoctorService {
     public void delete(Long id) {
         var doctor = doctorRepository.getReferenceById(id);
         doctor.delete();
+    }
+
+    public ShowDoctorDto getById(Long id) {
+        return new ShowDoctorDto(doctorRepository.getReferenceById(id));
     }
 }

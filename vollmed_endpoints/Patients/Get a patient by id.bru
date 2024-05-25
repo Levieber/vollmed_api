@@ -1,0 +1,15 @@
+meta {
+  name: Get a patient by id
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{BASE_URL}}/patients/{{id}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  id: 1
+}
