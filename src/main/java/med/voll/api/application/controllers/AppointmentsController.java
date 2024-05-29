@@ -1,5 +1,6 @@
 package med.voll.api.application.controllers;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.application.dtos.appointment.CancelAppointmentDto;
 import med.voll.api.application.dtos.appointment.CreateAppointmentDto;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("appointments")
+@SecurityRequirement(name = "bearer-key")
 public class AppointmentsController {
     @Autowired
     private AppointmentService appointmentService;
