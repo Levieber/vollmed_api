@@ -1,0 +1,21 @@
+meta {
+  name: Cancel an appointment by id
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{BASE_URL}}/appointments/{{id}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "reason": "PATIENT_CANCELED"
+  }
+}
+
+vars:pre-request {
+  id: 1
+}

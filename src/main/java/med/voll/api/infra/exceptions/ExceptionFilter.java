@@ -22,6 +22,11 @@ public class ExceptionFilter {
         return ResponseEntity.badRequest().body(errors.stream().map(BadRequestErrorDto::new).toList());
     }
 
+    @ExceptionHandler(DomainValidationException.class)
+    public ResponseEntity<String> handleDomainValidationException(DomainValidationException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     public record BadRequestErrorDto(String field, String message) {
         public BadRequestErrorDto(FieldError error) {
             this(error.getField(), error.getDefaultMessage());
